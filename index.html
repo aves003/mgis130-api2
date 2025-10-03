@@ -17,7 +17,53 @@
             min-height: 100vh;
             padding: 20px;
             line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
         }
+
+        /* Falling Papers Animation */
+        .paper {
+            position: fixed;
+            top: -100px;
+            width: 60px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(240, 244, 255, 0.8) 0%, rgba(255, 255, 255, 0.6) 100%);
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: fall linear infinite;
+            z-index: 0;
+        }
+
+        .paper::before {
+            content: '📝';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            opacity: 0.7;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0.3;
+            }
+        }
+
+        /* Generate multiple papers with different positions and speeds */
+        .paper:nth-child(1) { left: 10%; animation-duration: 15s; animation-delay: 0s; }
+        .paper:nth-child(2) { left: 25%; animation-duration: 18s; animation-delay: 2s; }
+        .paper:nth-child(3) { left: 40%; animation-duration: 20s; animation-delay: 4s; }
+        .paper:nth-child(4) { left: 55%; animation-duration: 16s; animation-delay: 1s; }
+        .paper:nth-child(5) { left: 70%; animation-duration: 19s; animation-delay: 3s; }
+        .paper:nth-child(6) { left: 85%; animation-duration: 17s; animation-delay: 5s; }
+        .paper:nth-child(7) { left: 15%; animation-duration: 21s; animation-delay: 6s; }
+        .paper:nth-child(8) { left: 60%; animation-duration: 14s; animation-delay: 2.5s; }
 
         .container {
             max-width: 1200px;
@@ -27,6 +73,8 @@
             padding: 30px;
             box-shadow: 0 20px 40px rgba(46, 92, 255, 0.3);
             backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
         }
 
         header {
@@ -145,14 +193,46 @@
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(26, 26, 46, 0.1);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             border: 2px solid transparent;
+            position: relative;
+        }
+
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(46, 92, 255, 0.1) 0%, rgba(255, 27, 141, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+
+        .content-card:hover::before {
+            opacity: 1;
         }
 
         .content-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px) scale(1.02);
             border-color: #2E5CFF;
-            box-shadow: 0 15px 40px rgba(46, 92, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(46, 92, 255, 0.4), 
+                        0 0 30px rgba(255, 27, 141, 0.3);
+        }
+
+        .content-card:hover .card-header {
+            animation: shimmer 1.5s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                filter: brightness(1);
+            }
+            50% {
+                filter: brightness(1.2);
+            }
         }
 
         .quote-card .card-header {
@@ -167,6 +247,8 @@
             color: white;
             padding: 20px;
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         .card-header h2 {
@@ -181,6 +263,8 @@
             align-items: center;
             justify-content: center;
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         .quote-text {
@@ -359,6 +443,16 @@
     </style>
 </head>
 <body>
+    <!-- Falling Papers Background -->
+    <div class="paper"></div>
+    <div class="paper"></div>
+    <div class="paper"></div>
+    <div class="paper"></div>
+    <div class="paper"></div>
+    <div class="paper"></div>
+    <div class="paper"></div>
+    <div class="paper"></div>
+    
     <div class="container">
         <header>
             <div class="brand-logo">
